@@ -1,8 +1,17 @@
-pub mod dom;
+use std::fs;
+
+pub mod parser;
 pub mod html;
+pub mod css;
 
 fn main() {
-    let html = String::from("<html name='a'><body>Hello, world!</body></html>");
-    let root_node = html::parse(html);
+    // html 解析
+    let html = fs::read_to_string("src/examples/test.html").unwrap();
+    let root_node = html::parser::parse(html);
     println!("{:?}", root_node);
+    
+    // css 解析
+    let css = fs::read_to_string("src/examples/test.css").unwrap();
+    let rules = css::parser::parse(css);
+    println!("{:?}", rules);
 }
