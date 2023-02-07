@@ -4,6 +4,7 @@ pub mod parser;
 pub mod html;
 pub mod css;
 pub mod style;
+pub mod layout;
 
 fn main() {
     // html 解析

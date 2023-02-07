@@ -8,11 +8,41 @@ type PropertyMap = HashMap<String, Value>;
 // 一个元素可以有多个 MatchedRule，Specificity 用来判断 css 的优先级
 type MatchedRule<'a> = (Specificity, &'a Rule);
 
+pub enum Display {
+    Inline,
+    Block,
+    None,
+}
+
 #[derive(Debug)]
 pub struct StyledNode<'a> {
     pub node: &'a Node,
     pub specified_values: PropertyMap,
     pub children: Vec<StyledNode<'a>>,
+}
+
+impl <'a> StyledNode<'a> {
+    // 如果属性存在则返回这个值，否则返回 None
+    pub fn value(&self, name: &str) -> Option<Value> {
+        self.specified_values.get(name).map(|v| v.clone())
+    }
+
+    // 显示 display 属性的值
+    pub fn display(&self) -> Display {
+        match self.value("display") {
+            Some(Value::Keyword(s)) => match &*s {
+                "block" => Display::Block,
+                "none" => Display::None,
+                _ => Display::Inline
+            },
+            _ => Display::Inline
+        }
+    }
+
+    // 返回 name 或 fallback_name 属性对应的值，如果都不存在则返回 default
+    pub fn lookup(&self, name: &str, fallback_name: &str, default: &Value) -> Value {
+        self.value(name).unwrap_or_else(|| self.value(fallback_name).unwrap_or_else(|| default.clone()))
+    }
 }
 
 pub fn style_tree<'a>(root: &'a Node, stylesheet: &'a Stylesheet) -> StyledNode<'a> {
@@ -72,7 +102,7 @@ fn matches_simple_selector(elem: &ElementData, selector: &SimpleSelector) -> boo
 
     // 如果某个类选择器不在当前匹配的元素中，则返回
     let elem_classes = elem.classes();
-    if selector.class.iter().any(|class| !  elem_classes.contains(&**class)) {
+    if selector.class.iter().any(|class| !elem_classes.contains(&**class)) {
         return false;
     }
 

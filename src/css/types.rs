@@ -15,6 +15,7 @@ pub enum Selector {
     Simple(SimpleSelector),
 }
 
+// css 选择器中用逗号分隔的，每一组代表一个 SimpleSelector，id、class、tag_name 是‘且’的关系
 #[derive(Debug)]
 pub struct SimpleSelector {
     pub id: Option<String>,
@@ -40,19 +41,28 @@ pub struct Declaration {
     pub value: Value,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum Value {
     Keyword(String),
     Length(f32, Unit),
     ColorValue(Color),
 }
 
-#[derive(Debug, Clone)]
+impl Value {
+    pub fn to_px(&self) -> f32 {
+        match *self {
+            Value::Length(f, Unit::Px) => f,
+            _ => 0.0
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq)]
 pub enum Unit {
     Px,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Color {
     pub r: u8,
     pub g: u8,
