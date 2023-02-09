@@ -2,7 +2,7 @@ use std::default::Default;
 
 use crate::{style::{StyledNode, Display}, css::types::{Value, Unit}};
 
-use self::BoxType::{AnonymousBlock, InlineNode, BlockNode};
+pub use self::BoxType::{AnonymousBlock, InlineNode, BlockNode};
 
 #[derive(Debug, Default, Copy, Clone)]
 pub struct Dimensions {
