@@ -62,6 +62,15 @@ impl<'a> LayoutBox<'a> {
     }
 }
 
+// 转换样式树到布局树
+pub fn layout_tree<'a>(node: &'a StyledNode<'a>, mut containing_block: Dimensions) -> LayoutBox<'a> {
+    // 布局高度从 0 开始计算
+    containing_block.content.height = 0.0;
+    let mut root_box = build_layout_tree(node);
+    root_box.layout(containing_block);
+    root_box
+}
+
 // 构建布局树但是不进行计算
 fn build_layout_tree<'a>(style_node: &'a StyledNode<'a>) -> LayoutBox<'a> {
     // 创建根盒子

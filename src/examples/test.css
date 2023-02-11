@@ -1,13 +1,43 @@
-h1, h2, h3 {
-    margin: auto;
-    color: #ffffff;
+* {
+    display: block;
 }
 
-div.note {
-    margin-bottom: 20px;
+span {
+    display: inline;
+}
+
+html {
+    width: 600px;
     padding: 10px;
+    border-width: 1px;
+    margin: auto;
+    background: #ffffff;
 }
 
-#answer {
+head {
     display: none;
+}
+
+.outer {
+    background: #00ccff;
+    border-color: #666666;
+    border-width: 2px;
+    margin: 50px;
+    padding: 50px;
+}
+
+.inner {
+    border-color: #cc0000;
+    border-width: 4px;
+    height: 100px;
+    width: 500px;
+}
+
+.inner#hi {
+    background: #553CFF;
+}
+
+.inner#bye {
+    margin-top: 100px;
+    background: #ffff00;
 }

@@ -9,9 +9,9 @@ enum DisplayCommand {
 }
 
 pub struct Canvas {
-    pixels: Vec<Color>,
-    width: usize,
-    height: usize,
+    pub pixels: Vec<Color>,
+    pub width: usize,
+    pub height: usize,
 }
 
 pub fn paint(layout_root: &LayoutBox, bounds: Rect) -> Canvas {
@@ -34,7 +34,7 @@ fn render_layout_box(list: &mut DisplayList, layout_box: &LayoutBox) {
     render_borders(list, layout_box);
 
     for child in &layout_box.children {
-        render_layout_box(list, layout_box);
+        render_layout_box(list, child);
     }
 }
 

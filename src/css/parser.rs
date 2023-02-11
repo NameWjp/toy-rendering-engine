@@ -3,8 +3,9 @@ use crate::parser::Parser;
 
 use super::types;
 
-pub fn parse(source: String) -> Vec<types::Rule> {
-    CSSParser { pos: 0, input: source }.parse_rules()
+pub fn parse(source: String) -> types::Stylesheet {
+    let mut parser = CSSParser { pos: 0, input: source };
+    types::Stylesheet { rules: parser.parse_rules() }
 }
 
 fn valid_identifier_char(c: char) -> bool {
