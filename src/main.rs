@@ -19,7 +19,7 @@ fn main() {
     viewport.content.width = 800.0;
     viewport.content.height = 600.0;
 
-    // 解析和渲染
+    // 解析结构
     let root_node = html::parser::parse(html);
     let stylesheet = css::parser::parse(css);
     let style_root = style::style_tree(&root_node, &stylesheet);

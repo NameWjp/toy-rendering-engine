@@ -1,3 +1,11 @@
+/**
+ * 该模块负责将‘布局树’转化为‘渲染列表’，结构如下：
+ * {
+ *    pixels：存储每个像素点的位置和颜色，
+ *    width：宽度，
+ *    height：高度
+ * }
+ */
 use std::vec;
 
 use crate::{layout::{Rect, LayoutBox, BlockNode, InlineNode}, css::types::{Color, Value}};

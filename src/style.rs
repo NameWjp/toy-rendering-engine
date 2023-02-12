@@ -1,3 +1,11 @@
+/**
+ * 该模块负责组合‘节点树’和‘样式列表’，生成的数据描述了每个节点分别应用了哪些属性，结构如下：
+ * {
+ *    node: 当前节点，
+ *    specified_values：当前节点应用了哪些样式，
+ *    children：子节点
+ * }
+ */
 use std::collections::HashMap;
 
 use crate::{css::types::{Value, SimpleSelector, Selector, Rule, Specificity, Stylesheet}, html::types::{Node, ElementData, NodeType}};

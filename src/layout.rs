@@ -1,3 +1,11 @@
+/**
+ * 该模块负责将‘样式树’生成‘布局树’，结构如下：
+ * {
+ *    dimensions：当前节点的尺寸信息，
+ *    box_type：节点类型，块状或内联，
+ *    children：子节点信息
+ * }
+ */
 use std::default::Default;
 
 use crate::{style::{StyledNode, Display}, css::types::{Value, Unit}};
@@ -62,7 +70,7 @@ impl<'a> LayoutBox<'a> {
     }
 }
 
-// 转换样式树到布局树
+// 转换样式树到布局树（containing_block 为外部容器的尺寸）
 pub fn layout_tree<'a>(node: &'a StyledNode<'a>, mut containing_block: Dimensions) -> LayoutBox<'a> {
     // 布局高度从 0 开始计算
     containing_block.content.height = 0.0;
@@ -263,6 +271,7 @@ impl Rect {
     }
 }
 
+// 非常优美的写法，从内容区依次向外扩张尺寸
 impl Dimensions {
     pub fn padding_box(self) -> Rect {
         self.content.expanded_by(self.padding)
